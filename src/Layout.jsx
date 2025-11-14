@@ -6,7 +6,7 @@ import FloatingButton from './components/FAB'
 import { ThemeProvider } from './contexts/theme'
 import useLogin, { LoginProvider } from './contexts/loginContext'
 import { ProductProvider } from './contexts/ProductContext'
-import ShopContextProvider from './contexts/ShopContext'
+import PlantsContextProvider from './contexts/PlantsContext'
 
 function Layout() {
 
@@ -34,12 +34,12 @@ function Layout() {
     <ThemeProvider value={{themeMode, darkTheme, lightTheme}}>
       <LoginProvider value={{username, password, setUsername, setPassword}}>
         <ProductProvider value={{productName, setProductName}}>
-          <ShopContextProvider>
+          <PlantsContextProvider>
             <Navbar />
             <Outlet />
             <Footer />
             <FloatingButton />
-          </ShopContextProvider>
+          </PlantsContextProvider>
         </ProductProvider>
       </LoginProvider>
     </ThemeProvider>

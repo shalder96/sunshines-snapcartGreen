@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import { ShopContext } from '../contexts/ShopContext';
+import ProductCard from './ProductCard';
 
 
 
@@ -18,11 +19,7 @@ const FeaturedProducts = () => {
     setfeaturedProducts(featured.slice(0,10));
   },[])
   
-  const handleClick = (e) => {
-    // Handle add to cart logic here
-    e.preventDefault();
-    console.log('Product added to cart');
-  }
+
 
   
   return (
@@ -60,35 +57,7 @@ const FeaturedProducts = () => {
         >
           {featuredProducts.map((item, index) => (
             <SwiperSlide key={index}>
-              <div className="overflow-hidden transition bg-white border border-green-200 shadow-md dark:border-gray-600 dark:bg-gray-900 rounded-2xl hover:shadow-lg">
-                {/* Colorful Background Layer */}
-                <div className="absolute top-0 left-0 z-0 w-full h-full border rounded-2xl bg-gradient-to-br from-green-50 via-transparent to-purple-50 dark:from-green-800 dark:via-blue-800 dark:to-purple-800 opacity-30">
-                </div>
-
-                {/* Card content  */}
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="object-cover w-full h-48"
-                />
-                <div className="flex items-center justify-between p-4">
-                  <div className="text-sm font-semibold text-green-600 dark:text-green-200">
-                    {item.tag}
-                  </div>
-                  
-                  <p className="mt-2 font-semibold text-green-800 dark:text-green-400">
-                    {item.price}
-                  </p>
-                </div>
-                <h3 className="my-2 text-lg font-medium text-center text-gray-800 dark:text-gray-200">
-                    {item.name}
-                </h3>
-                <button
-                  onClick={handleClick}
-                  className="w-full py-2 font-semibold text-white transition bg-green-700 rounded-b-2xl hover:bg-green-800">
-                  Add to Cart
-                </button>
-              </div>
+              <ProductCard index={index} item={item} />
             </SwiperSlide>
           ))}
         </Swiper>

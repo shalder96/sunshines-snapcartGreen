@@ -1,21 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Button,
-  Typography,
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
-} from "@mui/material";
-import { IoIosArrowDropdown } from "react-icons/io";
+import { IoIosArrowDropdown, IoMdArrowDropdown } from "react-icons/io";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 import axios from "axios";
 
 import useTheme from "../contexts/theme";
-// import plantProducts from '../data/products.json'
 import plantsOffer from "../data/plantsOffer.json";
-import { ShopContext } from "../contexts/ShopContext";
+import ProductCard from "../components/ProductCard";
+import { PlantsContext } from "../contexts/PlantsContext";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -23,35 +15,59 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
 const Plants = () => {
-  const { products } = useContext(ShopContext);
+  const { plants } = useContext(PlantsContext);
   const { themeMode } = useTheme();
+
   const [showFilter, setShowFilter] = useState(false);
-  const API = "https://www.fruityvice.com/api/fruit/all";
+  const [filterPlants, setFilterPlants] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [sortType, setSortType] = useState("relevant");
+  const [sortOpen, setSortopen] = useState(false); //Sortmenu arrow logic
 
-  const [plants, setPlants] = useState([]);
-  const [loading, setLoading] = useState(false);
+  // Toggle selected categories
+  const toggleCategory = (e) => {
+    const value = e.target.value;
 
-  // useEffect(() => {
-  //   const fetchPlantProducts = async () => {
-  //     try {
-  //       const response = await axios.get(API)
-  //       setPlants(response.data.data)
-  //       console.log("Raw API response:", response);
-  //     } catch (error) {
-  //       console.error("Error fetching plant data:", error);
+    setCategory((prev) =>
+      prev.includes(value)
+        ? prev.filter((item) => item !== value)
+        : [...prev, value]
+    );
+  };
 
-  //     } finally{
-  //       setLoading(false)
-  //     }
-  //   }
-  //   fetchPlantProducts();
-  // }, [])
+  // Filter function (pure)
+  const applyFilter = (items) => {
+    if (category.length === 0) return items;
 
-  // if(loading) return <div className="mt-4 text-center text-black dark:text-white">🌱 Loading plants...</div>;
+    return items.filter((item) => category.includes(item.category));
+  };
 
-  // const handleAddToCart = (name) => {
-  //   alert(`🪴 ${name} added to cart!`);
-  // };
+  // Sort function (pure)
+  const applySort = (items) => {
+    const sorted = [...items];
+
+    if (sortType === "low-high") {
+      return sorted.sort((a, b) => a.price - b.price);
+    }
+
+    if (sortType === "high-low") {
+      return sorted.sort((a, b) => b.price - a.price);
+    }
+
+    return sorted; // "relevant"
+  };
+
+  // Main sync logic
+  useEffect(() => {
+    if (!plants || plants.length === 0) return;
+
+    let updated = [...plants];
+
+    updated = applyFilter(updated);
+    updated = applySort(updated);
+
+    setFilterPlants(updated);
+  }, [plants, category, sortType]);
 
   return (
     <section className="px-1.5 py-16 w-full bg-green-50 dark:bg-black min-h-screen">
@@ -78,10 +94,8 @@ const Plants = () => {
         ))}
       </Swiper>
 
-      <hr className="mt-4 bg-green-800" />
-
       {/* Lower part  */}
-      <div className="flex flex-row">
+      <div className="flex flex-row mt-6">
         {/* LEFT SECTION FILTER  */}
         <div className="flex flex-col gap-4">
           {/* first filter box  */}
@@ -109,7 +123,12 @@ const Plants = () => {
               </p>
               <div className="flex flex-col gap-2 text-sm font-normal tracking-wider">
                 <p className="flex gap-2">
-                  <input type="checkbox" className="w-3" value={"Orchids"} />{" "}
+                  <input
+                    type="checkbox"
+                    className="w-3"
+                    value={"Orchids"}
+                    onChange={toggleCategory}
+                  />{" "}
                   Orchids
                 </p>
                 <p className="flex gap-2">
@@ -117,6 +136,7 @@ const Plants = () => {
                     type="checkbox"
                     className="w-3"
                     value={"Indoor Plants"}
+                    onChange={toggleCategory}
                   />{" "}
                   Indoor Plants
                 </p>
@@ -125,6 +145,7 @@ const Plants = () => {
                     type="checkbox"
                     className="w-3"
                     value={"Medicinal Plants"}
+                    onChange={toggleCategory}
                   />{" "}
                   Medicinal Plants
                 </p>
@@ -133,6 +154,7 @@ const Plants = () => {
                     type="checkbox"
                     className="w-3"
                     value={"Flowering Plants"}
+                    onChange={toggleCategory}
                   />{" "}
                   Flowering Plants
                 </p>
@@ -142,63 +164,43 @@ const Plants = () => {
         </div>
 
         {/* RIGHT SECTION UI  */}
-      </div>
-
-      {/* Sort/Filter options */}
-
-      {/* <Box className="px-4 py-12 bg-green-50 dark:bg-black">
-      <Typography 
-        variant="h4" 
-        align="center" 
-        fontWeight="bold" 
-        sx={{color: themeMode === 'dark'? "#bbf7d0" : "green"}}  
-        gutterBottom
-      >
-        🌿 Green Collection — Indoor & Medicinal Plants
-      </Typography>
-
-      <Box
-        sx={{
-          display: 'grid',
-          gap: 4,
-          gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr' },
-          mt: 6,
-          maxWidth: '1200px',
-          mx: 'auto',
-        }}
-      >
-        {plants.map((plant) => (
-          <Card key={plant.id} sx={{ boxShadow: 3, borderRadius: 3 }}>
-            <CardMedia
-              component="img"
-              height="180"
-              image={plant.image || plant.data.image_url || "https://via.placeholder.com/300x180?text=No+Image"}
-              alt={plant.name || plant.attributes.name}
-            />
-            <CardContent>
-              <Typography variant="h6" fontWeight="bold" gutterBottom>
-                {plant.name || plant.attributes.name}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {plant.tag || plant.attributes.description?.substring(0, 80) || "No description"}
-              </Typography>
-              <Typography variant="subtitle1" sx={{ mt: 1, color: 'green' }}>
-                {plant.price || "₹99.00" }
-              </Typography>
-              <Button
-                variant="contained"
-                color="success"
-                fullWidth
-                sx={{ mt: 2 }}
-                onClick={() => handleAddToCart(plant.name || plant.attributes.name)}
+        <div className="flex-1">
+          <div className="flex justify-between px-4 mb-4 text-base">
+            <h1 className="text-xl font-semibold text-green-800 md:text-2xl dark:text-green-100">
+              ALL PLANTS
+            </h1>
+            {/* Product Sort  */}
+            <div className="relative" onClick={() => setSortopen(!sortOpen)}>
+              <select
+                onFocus={() => setSortopen(true)}
+                onBlur={() => setSortopen(false)}
+                onChange={(e) => setSortType(e.target.value)}
+                className="p-2 pr-12 text-sm text-green-800 bg-green-100 border-2 border-green-300 appearance-none focus:outline-none dark:text-green-100 md:text-lg dark:bg-gray-900"
               >
-                Add to Cart
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
-      </Box>
-    </Box> */}
+                <option value="select">Sort by: Select an option</option>
+                <option value="relevant">Sort by: Relevant</option>
+                <option value="low-high">Sort by: Price (Low to High)</option>
+                <option value="high-low">Sort by: Price (High to Low)</option>
+              </select>
+              <span className="absolute pt-1 -translate-y-1/2 pointer-events-none right-3 top-1/2">
+                <IoMdArrowDropdown
+                  size={24}
+                  className={`text-green-800 dark:text-green-100 transition-transform duration-300 ease-in-out ${
+                    sortOpen ? "rotate-180" : "rotate-0"
+                  }`}
+                />
+              </span>
+            </div>
+          </div>
+
+          {/* Map Products  */}
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 gap-y-6">
+            {filterPlants.map((item, index) => (
+              <ProductCard item={item} index={index} key={index} />
+            ))}
+          </div>
+        </div>
+      </div>
     </section>
   );
 };

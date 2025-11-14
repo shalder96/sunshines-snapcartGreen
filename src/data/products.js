@@ -6,6 +6,7 @@ export const products = [
     tag: "Herbal",
     image: "https://images.unsplash.com/photo-1588908933351-eeb8cd4c4521?q=80",
     featured: false,
+    category: "Medicinal Plants",
   },
   {
     id: 2,
@@ -14,14 +15,16 @@ export const products = [
     tag: "Air Purifier",
     image: "https://images.unsplash.com/photo-1611527664689-d430dd2a6774?q=80",
     featured: true,
+    category: "Indoor Plants",
   },
   {
     id: 3,
     name: "Money Plant",
     price: "₹180",
     tag: "Indoor",
-    image: "https://images.unsplash.com/photo-1560184897-ae75f4184931?q=80",
+    image: "https://images.unsplash.com/photo-1623752862599-0cd2b003a26f?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     featured: false,
+    category: "Indoor Plants",
   },
   {
     id: 4,
@@ -30,6 +33,7 @@ export const products = [
     tag: "Medicinal",
     image: "https://images.pexels.com/photos/2613947/pexels-photo-2613947.jpeg",
     featured: true,
+    category: "Medicinal Plants",
   },
   {
     id: 5,
@@ -50,15 +54,6 @@ export const products = [
     featured: false,
   },
   {
-    id: 7,
-    name: "Mint Plant Pot (Organic)",
-    price: "₹120",
-    tag: "Organic",
-    image:
-      "https://images.unsplash.com/photo-1588908933351-eeb8cd4c4521?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0",
-    featured: false,
-  },
-  {
     id: 8,
     name: "Leafy Coriander",
     price: "₹25 / bunch",
@@ -76,25 +71,7 @@ export const products = [
       "https://images.unsplash.com/photo-1655776160548-91b9781e36d0?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0",
     featured: true,
   },
-  {
-    id: 10,
-    name: "Spider Plant (Indoor)",
-    price: "₹150",
-    tag: "Indoor Plant",
-    image:
-      "https://images.unsplash.com/photo-1611527664689-d430dd2a6774?q=80&w=1473&auto=format&fit=crop&ixlib=rb-4.1.0",
-    featured: false,
-  },
+
 ];
 
-export const plants = [
-  {
-    id: 1,
-    name: "Spider Plant (Indoor)",
-    price: "₹150",
-    tag: "Indoor Plant",
-    image:
-      "https://images.unsplash.com/photo-1611527664689-d430dd2a6774?q=80&w=1473&auto=format&fit=crop&ixlib=rb-4.1.0",
-    featured: false,
-  },
-];
+
