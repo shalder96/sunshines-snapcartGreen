@@ -3,19 +3,19 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
-import { ShopContext } from '../contexts/ShopContext';
+import { PlantsContext } from '../contexts/PlantsContext';
 import ProductCard from './ProductCard';
 
 
 
 
 const FeaturedProducts = () => {
-  const {products} = useContext(ShopContext);
+  const {plants} = useContext(PlantsContext);
   const [featuredProducts, setfeaturedProducts] = useState([]);
 
 
   useEffect(() => {
-    const featured = products.filter((p) => p.featured);
+    const featured = plants.filter((p) => p.featured);
     setfeaturedProducts(featured.slice(0,10));
   },[])
   

@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { IoIosArrowDropdown, IoMdArrowDropdown } from "react-icons/io";
+import { FaPagelines } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 import axios from "axios";
 
+import SearchBar from "../components/SearchBar";
 import useTheme from "../contexts/theme";
 import plantsOffer from "../data/plantsOffer.json";
 import ProductCard from "../components/ProductCard";
@@ -165,10 +167,13 @@ const Plants = () => {
 
         {/* RIGHT SECTION UI  */}
         <div className="flex-1">
-          <div className="flex justify-between px-4 mb-4 text-base">
-            <h1 className="text-xl font-semibold text-green-800 md:text-2xl dark:text-green-100">
-              ALL PLANTS
+
+              {/* Header Bar  */}
+          <div className="flex items-center justify-between w-full h-16 px-4 mb-4 text-base">
+            <h1 className="flex items-center gap-4 text-xl font-semibold text-green-800 md:text-2xl dark:text-green-100">
+              ALL PLANTS <FaPagelines />
             </h1>
+            <SearchBar />
             {/* Product Sort  */}
             <div className="relative" onClick={() => setSortopen(!sortOpen)}>
               <select
@@ -177,7 +182,6 @@ const Plants = () => {
                 onChange={(e) => setSortType(e.target.value)}
                 className="p-2 pr-12 text-sm text-green-800 bg-green-100 border-2 border-green-300 appearance-none focus:outline-none dark:text-green-100 md:text-lg dark:bg-gray-900"
               >
-                <option value="select">Sort by: Select an option</option>
                 <option value="relevant">Sort by: Relevant</option>
                 <option value="low-high">Sort by: Price (Low to High)</option>
                 <option value="high-low">Sort by: Price (High to Low)</option>
