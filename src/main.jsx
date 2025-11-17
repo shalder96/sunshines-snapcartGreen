@@ -23,7 +23,7 @@ const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy.jsx'))
 const ReturnPolicy = lazy(() => import('./pages/ReturnPolicy.jsx'))
 const DeliveryInfo = lazy(() => import('./pages/DeliveryInfo.jsx'))
 const FAQPage = lazy(() => import('./pages/FAQPage.jsx'))
-const ProductDetails = lazy(() => import('./components/ProductDetails.jsx'));
+const PlantDetails = lazy(() => import('./pages/PlantDetails.jsx'));
 const ErrorPage = lazy(() => import('./components/ErrorPage.jsx'));
 
 
@@ -48,7 +48,7 @@ const router = createBrowserRouter(
       <Route path='return-policy' element={<ReturnPolicy />}/>
       <Route path='delivery-info' element={<DeliveryInfo />}/>
       <Route path="faqs" element={<FAQPage />} />
-      <Route path="productDetails/:id" element={<ProductDetails />} />
+      <Route path="plantDetails/:id" element={<PlantDetails />} />
       <Route path="*" element={<ErrorPage />} />
     </Route>
   )

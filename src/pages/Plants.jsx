@@ -17,14 +17,14 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
 const Plants = () => {
-  const { plants } = useContext(PlantsContext);
+  const { plants, search, showSearch } = useContext(PlantsContext);
   const { themeMode } = useTheme();
 
   const [showFilter, setShowFilter] = useState(false);
   const [filterPlants, setFilterPlants] = useState([]);
   const [category, setCategory] = useState([]);
   const [sortType, setSortType] = useState("relevant");
-  const [sortOpen, setSortopen] = useState(false); //Sortmenu arrow logic
+  const [sortOpen, setSortOpen] = useState(false); //Sortmenu arrow logic
 
   // Toggle selected categories
   const toggleCategory = (e) => {
@@ -39,9 +39,26 @@ const Plants = () => {
 
   // Filter function (pure)
   const applyFilter = (items) => {
-    if (category.length === 0) return items;
+    if (!items) return [];
 
-    return items.filter((item) => category.includes(item.category));
+    let filtered = [...items];
+    
+    // 1. Apply search filter (if active)
+  if (showSearch && search) {
+    const q = search.toLowerCase();
+    filtered = filtered.filter((item) =>
+      item.name.toLowerCase().includes(q)
+    );
+  }
+
+     // 2. Apply category filter (only if user selected categories)
+  if (category.length > 0) {
+    filtered = filtered.filter((item) =>
+      category.includes(item.category)
+    );
+  }
+
+  return filtered;
   };
 
   // Sort function (pure)
@@ -69,7 +86,7 @@ const Plants = () => {
     updated = applySort(updated);
 
     setFilterPlants(updated);
-  }, [plants, category, sortType]);
+  }, [plants, category, sortType, search, showSearch]);
 
   return (
     <section className="px-1.5 py-16 w-full bg-green-50 dark:bg-black min-h-screen">
@@ -175,10 +192,10 @@ const Plants = () => {
             </h1>
             <SearchBar />
             {/* Product Sort  */}
-            <div className="relative" onClick={() => setSortopen(!sortOpen)}>
+            <div className="relative" onClick={() => setSortOpen(!sortOpen)}>
               <select
-                onFocus={() => setSortopen(true)}
-                onBlur={() => setSortopen(false)}
+                onFocus={() => setSortOpen(true)}
+                onBlur={() => setSortOpen(false)}
                 onChange={(e) => setSortType(e.target.value)}
                 className="p-2 pr-12 text-sm text-green-800 bg-green-100 border-2 border-green-300 appearance-none focus:outline-none dark:text-green-100 md:text-lg dark:bg-gray-900"
               >
