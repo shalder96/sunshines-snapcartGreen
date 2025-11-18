@@ -1,4 +1,4 @@
-export const products = [
+export const featuredProducts = [
   {
     id: 1,
     name: "Mint Plant Pot",

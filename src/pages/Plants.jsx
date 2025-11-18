@@ -8,7 +8,7 @@ import axios from "axios";
 import SearchBar from "../components/SearchBar";
 import useTheme from "../contexts/theme";
 import plantsOffer from "../data/plantsOffer.json";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/plantsCard";
 import { PlantsContext } from "../contexts/PlantsContext";
 
 import "swiper/css";
@@ -176,6 +176,15 @@ const Plants = () => {
                     onChange={toggleCategory}
                   />{" "}
                   Flowering Plants
+                </p>
+                <p className="flex gap-2">
+                  <input
+                    type="checkbox"
+                    className="w-3"
+                    value={"Flowering Plants"}
+                    onChange={toggleCategory}
+                  />{" "}
+                  Sacred Plants
                 </p>
               </div>
             </div>

@@ -35,6 +35,7 @@ const router = createBrowserRouter(
     <Route path='/' element={<Layout />}>
       <Route index element={<Home />} />
       <Route path='plants' element={<Plants />} />
+      <Route path="plants/plantDetails/:id" element={<PlantDetails />} />
       <Route path='vegetables' element={<Vegetables />} />
       <Route path='fruits' element={<Fruits />} />
       <Route path='blog' element={<Blog />} />
@@ -48,7 +49,7 @@ const router = createBrowserRouter(
       <Route path='return-policy' element={<ReturnPolicy />}/>
       <Route path='delivery-info' element={<DeliveryInfo />}/>
       <Route path="faqs" element={<FAQPage />} />
-      <Route path="plantDetails/:id" element={<PlantDetails />} />
+      
       <Route path="*" element={<ErrorPage />} />
     </Route>
   )

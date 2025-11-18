@@ -4,12 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import { GoSearch } from "react-icons/go";
 import { RiAccountCircleLine } from "react-icons/ri";
-import { useCart } from "../contexts/CartContext";
+// import { useCart } from "../contexts/CartContext";
 import { PlantsContext } from "../contexts/PlantsContext";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { cartItems } = useCart(); // comment this out if not using CartContext
+  // const { cartItems } = useCart(); 
   const [accountOpen, setAccountOpen] = useState(false);
   const { setShowSearch } = useContext(PlantsContext);
   const menu = [
@@ -24,7 +24,7 @@ const Navbar = () => {
     <header className="fixed z-50 w-full text-black bg-green-900 shadow-md">
       <div className="flex items-center justify-between px-4 py-3 mx-auto max-w-7xl">
         {/* Logo */}
-        <Link to="/" className="text-2xl font-bold text-green-100">
+        <Link to="/" className="text-2xl font-bold text-green-100 outline-none">
           SnapCartGreen
         </Link>
 
@@ -83,11 +83,11 @@ const Navbar = () => {
           >
             <FiShoppingCart size={22} />
 
-            {cartItems?.length > 0 && (
+            {/* {cartItems?.length > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-green-100 text-xs px-1.5 py-0.5 rounded-full font-semibold leading-none">
                 {cartItems.length} || 0
               </span>
-            )}
+            )} */}
           </NavLink>
         </div>
 
